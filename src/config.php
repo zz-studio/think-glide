@@ -12,6 +12,8 @@
 use think\facade\Request;
 
 return [
+    // 本地图片文件夹的位置
+    'source' => app()->getRootPath() . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'upload',
     // 路由前缀，匹配到该前缀时中间件开始执行
     'baseUrl' => '/images',
     // 缓存文件位置

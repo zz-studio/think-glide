@@ -3,11 +3,11 @@
  * +----------------------------------------------------------------------
  * | think-glide [thinkphp6]
  * +----------------------------------------------------------------------
- *  .--,       .--,             | FILE: Glide.php
+ *  .--,       .--,             | FILE: Response.php
  * ( (  \.---./  ) )            | AUTHOR: byron
  *  '.__/o   o\__.'             | EMAIL: xiaobo.sun@qq.com
  *     {=  ^  =}                | QQ: 150093589
- *     /       \                | DATETIME: 2019/11/6 12:58
+ *     /       \                | DATETIME: 2019/11/6 14:33
  *    //       \\               |
  *   //|   .   |\\              |
  *   "'\       /'"_.-~^`'-.     |
@@ -20,34 +20,31 @@
  */
 declare(strict_types=1);
 
-namespace think\glide\middleware;
+namespace think\glide;
 
-use think\App;
-use think\facade\Config;
-use think\facade\Request;
-use think\Glide AS GlideFactory;
+use League\Flysystem\FilesystemInterface;
+use League\Glide\Responses\ResponseFactoryInterface;
+use think\Response;
 
-class Glide
+class ResponseFactory implements ResponseFactoryInterface
 {
-    protected $app;
-
-    public function __construct(App $app)
-    {
-        $this->app  = $app;
-    }
-
     /**
-     * 图片缩放中间件
-     * @param $request
-     * @param \Closure $next
+     * Create response
+     * @param FilesystemInterface $cache
+     * @param string              $path
      * @author Byron Sampson <xiaobo.sun@qq.com>
-     * @return mixed
+     * @return Response
+     * @throws \League\Flysystem\FileNotFoundException
      */
-    public function handle($request, \Closure $next)
+    public function create(FilesystemInterface $cache, $path)
     {
-        $config = Config::get('glide', []);
-        $middleware = new GlideFactory($this->app, $config);
+        $contentType = $cache->getMimetype($path);
+        $contentLength = $cache->getSize($path);
 
-        return $middleware($request, $next);
+        return Response::create()->data(stream_get_contents($cache->readStream($path)))
+            ->header([
+                'Content-Type' => $contentType,
+                'Content-Length' => $contentLength
+            ]);
     }
 }
