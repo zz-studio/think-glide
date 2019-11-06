@@ -54,7 +54,7 @@ class Glide
             'baseUrl' => '/images',
             'cache' => $app->getRuntimePath() . '/glide',
             'cacheTime' => '+1 day',
-            'signKey' => false,
+            'signKey' => '',
             'glide' => [],
             'onException' => function (\Exception $exception, Request $request, Server $server) {
                 // 异常处理
@@ -70,10 +70,8 @@ class Glide
         $resolver->setRequired('source');
         $this->options = $resolver->resolve($options);
         //如果启动安全校验，需要注入服务
-        if ($this->options['signKey']) {
-            $urlBuilder = UrlBuilderFactory::create($this->options['baseUrl'], $this->options['signKey']);
-            $this->app->bind('glide_builder', $urlBuilder);
-        }
+        $urlBuilder = UrlBuilderFactory::create($this->options['baseUrl'], $this->options['signKey']);
+        $this->app->bind('glide_builder', $urlBuilder);
     }
 
     /**
@@ -133,7 +131,12 @@ class Glide
         return $this->applyCacheHeaders($response, $modifiedTime);
     }
 
-
+    /**
+     * 附加缓存标识
+     * @param Response $response
+     * @param $modifiedTime
+     * @return Response
+     */
     protected function applyCacheHeaders(Response $response, $modifiedTime)
     {
         $expire = strtotime($this->options['cacheTime']);
@@ -162,6 +165,7 @@ class Glide
         }
         return false;
     }
+
     /**
      * @param Request $request
      * @param $modifiedTime
@@ -176,6 +180,7 @@ class Glide
         }
         return strtotime($modifiedSince) === (int) $modifiedTime;
     }
+
     /**
      * @param string $uri
      * @throws \League\Glide\Signatures\SignatureException

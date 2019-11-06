@@ -142,7 +142,7 @@ class UrlBuilderFactory
     {
         $httpSignature = null;
 
-        if (!is_null($signKey)) {
+        if ($signKey) {
             $httpSignature = SignatureFactory::create($signKey);
         }
 
