@@ -1,4 +1,4 @@
-# ThinkPHP 图片动态裁剪缩放库
+# ThinkPHP6+ 图片动态裁剪缩放库
 
 [Glide](https://github.com/thephpleague/glide) 是一个可以帮助你根据指定参数动态的生成图片内容给浏览器的图片操作库，从而实现
 图片动态裁剪，打水印等，本库对 Glide 进行了一些友好的包装与扩展，屏蔽了原生库的一些底层抽象从而使得 ThinkPHP 用户可以在 ThinkPHP6 项目中
