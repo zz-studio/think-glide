@@ -28,13 +28,16 @@ $ composer require zzstudio/think-glide
     ];
     ```
 
-### 自定义配置
+### 生成配置
 
-执行下面命令生成配置:
+系统安装后会自动在 config 目录中生成 glide.php 的配置文件，
+如果系统未生成可在命令行执行
 
-```bash
-$  php think glide:config
+```php
+php think glide:config 
 ```
+
+快速生成配置文件
 
 ### 参数说明
 
