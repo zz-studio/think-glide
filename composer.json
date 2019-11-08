@@ -23,5 +23,12 @@
     "files": [
       "src/helper.php"
     ]
+  },
+  "extra": {
+    "think": {
+      "config":{
+        "glide": "src/config.php"
+      }
+    }
   }
 }
