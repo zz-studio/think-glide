@@ -95,7 +95,7 @@ return [
 
 #### nginx 配置
 ```
-location ~* /thumb/(.*)$ {
+location ~* /images/(.*)$ {
   try_files $uri $uri/ /index.php/$uri;
 }
 ```
