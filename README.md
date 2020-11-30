@@ -93,6 +93,13 @@ return [
 ])
 ```
 
+#### nginx 配置
+```
+location ~* /thumb/(.*)$ {
+  try_files $uri $uri/ /index.php/$uri;
+}
+```
+
 注意该闭包必须返回一个 `think\Response` 实例；
 
 ### Quick reference

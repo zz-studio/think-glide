@@ -139,7 +139,7 @@ class Glide
      */
     protected function applyCacheHeaders(Response $response, $modifiedTime)
     {
-        $expire = strtotime($this->options['cacheTime']);
+        $expire = $this->options['cacheTime'] ? strtotime($this->options['cacheTime']) : time();
         $maxAge = $expire - time();
         return $response
             ->header([
