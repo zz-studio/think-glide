@@ -9,7 +9,7 @@
 // | Author: Byron Sampson <xiaobo.sun@qq.com>
 // +----------------------------------------------------------------------
 
-use think\facade\Request;
+use think\Request;
 
 return [
     // 本地图片文件夹的位置
